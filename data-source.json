@@ -10,7 +10,7 @@
 					"find": { "query": {} }
 				},
 				"topics": ["policy_data"],
-				"dst_path": "cities"
+				"dst_path": "rooms"
 			}
 		]
 	}
