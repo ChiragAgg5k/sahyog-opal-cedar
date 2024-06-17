@@ -1,4 +1,4 @@
-services:
+services:  
   # A simple nginx server to serve our mock data sources.
   cedar_data_nginx:
       image: nginx:latest
@@ -44,9 +44,8 @@ services:
       # configures from where the opal client should initially fetch data (when it first goes up, after disconnection, etc).
       # the data sources represents from where the opal clients should get a "complete picture" of the data they need.
       # after the initial sources are fetched, the client will subscribe only to update notifications sent by the server.
-      - OPAL_DATA_CONFIG_SOURCES={"config":{"entries":[{"url":"http://cedar_data_nginx/data.json","topics":["policy_data"],"dst_path":""},{"url":"http://cedar_data_nginx/data.json","topics":["policy_data"],"dst_path":""}]}}
+      - OPAL_DATA_CONFIG_SOURCES={"config":{"entries":[{"url":"mongodb+srv://chiragagg5k:dcPUjufOo1gDxOE8@cluster0.bc5lwnh.mongodb.net/data?retryWrites=true&w=majority&appName=Cluster0","config":{ "fetcher":"MongoDBFetchProvider","database":"data","collection":"Room","find":{"query":{}}},"topics":["policy_data"],"dst_path":"cities"}]}}
       - OPAL_LOG_FORMAT_INCLUDE_PID=true
-
       # By default, the OPAL server looks for OPA rego files. Configure it to look for cedar files.
       - OPAL_FILTER_FILE_EXTENSIONS=.cedar
       - OPAL_POLICY_REPO_POLICY_EXTENSIONS=.cedar
@@ -58,7 +57,9 @@ services:
   opal_client:
     # by default we run opal-client from latest official image
     image: permitio/opal-client-cedar:latest
+    command: ["pip", "install", "--no-cache-dir", "--user", "opal-fetcher-mongodb", 'sh -c "exec ./wait-for.sh opal_server:7002 --timeout=20 -- ./start.sh"']
     environment:
+      - OPAL_FETCH_PROVIDER_MODULES=opal_common.fetcher.providers,opal_fetcher_mongodb.provider
       - OPAL_SERVER_URL=http://opal_server:7002
       - OPAL_LOG_FORMAT_INCLUDE_PID=true
     ports:
@@ -70,7 +71,6 @@ services:
       - opal_server
     # this command is not necessary when deploying OPAL for real, it is simply a trick for dev environments
     # to make sure that opal-server is already up before starting the client.
-    command: sh -c "exec ./wait-for.sh opal_server:7002 --timeout=20 -- ./start.sh"
     links:
       - cedar_data_nginx
 

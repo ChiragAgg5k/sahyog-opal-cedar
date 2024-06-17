@@ -1,0 +1,17 @@
+{
+	"config": {
+		"entries": [
+			{
+				"url": "mongodb+srv://chiragagg5k:dcPUjufOo1gDxOE8@cluster0.bc5lwnh.mongodb.net/data?retryWrites=true&w=majority&appName=Cluster0",
+				"config": {
+					"fetcher": "MongoDBFetchProvider",
+					"database": "data",
+					"collection": "Room",
+					"find": { "query": {} }
+				},
+				"topics": ["policy_data"],
+				"dst_path": "cities"
+			}
+		]
+	}
+}
