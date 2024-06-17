@@ -8,6 +8,19 @@
 			}
 		],
 		"uid": {
+			"id": "chiragaggarwal5k@gmail.com",
+			"type": "User"
+		}
+	},
+	{
+		"attrs": {},
+		"parents": [
+			{
+				"id": "admin",
+				"type": "Role"
+			}
+		],
+		"uid": {
 			"id": "admin@blog.app",
 			"type": "User"
 		}
