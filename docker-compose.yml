@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   # A simple nginx server to serve our mock data sources.
   cedar_data_nginx:
@@ -36,8 +35,8 @@ services:
       # - if this repo is not public, you can pass an ssh key via `OPAL_POLICY_REPO_SSH_KEY`)
       # - the repo we pass in this example is *public* and acts as an example repo with dummy rego policy
       # - for more info, see: https://docs.opal.ac/tutorials/track_a_git_repo
-      - OPAL_POLICY_REPO_URL=http://cedar_retrieval_repository/opal-cedar/.git
-      - OPAL_POLICY_REPO_MAIN_BRANCH=main
+      - OPAL_POLICY_REPO_URL=https://github.com/ChiragAgg5k/sahyog-opal-cedar
+      - OPAL_POLICY_REPO_MAIN_BRANCH=master
       # in this example we will use a polling interval of 30 seconds to check for new policy updates (git commits affecting the rego policy).
       # however, it is better to utilize a git *webhook* to trigger the server to check for changes only when the repo has new commits.
       # for more info see: https://docs.opal.ac/tutorials/track_a_git_repo
